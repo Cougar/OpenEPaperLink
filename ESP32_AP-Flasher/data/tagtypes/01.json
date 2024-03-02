@@ -35,7 +35,8 @@
 			"temp": [5, 65, "fonts/bahnschrift70"],
 			"icon": [285, 20, 70, 2],
 			"dir": [235, -12, 40],
-			"umbrella": [190, -50, 25]
+			"umbrella": [190, -50, 25],
+			"time": [ 5, 40, "t0_14b_tf"]
 		},
 		"8": {
 			"location": [5, 12, "t0_14b_tf"],

@@ -325,7 +325,7 @@ void drawNew(const uint8_t mac[8], tagRecord *&taginfo) {
             // https://github.com/erikflowers/weather-icons
 
             drawWeather(filename, cfgobj, taginfo, imageParams);
-            taginfo->nextupdate = now + 1800;
+            taginfo->nextupdate = now + 15*60;
             updateTagImage(filename, mac, 15, taginfo, imageParams);
             break;
 
@@ -854,6 +854,7 @@ void drawWeather(String &filename, JsonObject &cfgobj, const tagRecord *taginfo,
     const int winddirection = currentWeather["winddirection"].as<int>();
     const bool isNight = currentWeather["is_day"].as<int>() == 0;
     uint8_t weathercode = currentWeather["weathercode"].as<int>();
+    String timeval = currentWeather["time"].as<String>();
     if (weathercode > 40) weathercode -= 40;
 
     const uint8_t beaufort = windSpeedToBeaufort(windspeed);
@@ -890,6 +891,10 @@ void drawWeather(String &filename, JsonObject &cfgobj, const tagRecord *taginfo,
     initSprite(spr, imageParams.width, imageParams.height, imageParams);
     const auto &location = doc["location"];
     drawString(spr, cfgobj["location"], location[0], location[1], location[2]);
+    const auto &time = doc["time"];
+    if (time) {
+        drawString(spr, timeval.substring(11), time[0], time[1], time[2]);
+    }
     const auto &wind = doc["wind"];
     drawString(spr, String(windval), wind[0], wind[1], wind[2], TR_DATUM, (beaufort > 4 ? imageParams.highlightColor : TFT_BLACK));
 
